@@ -13,7 +13,7 @@ prefix="${working_path}/miniforge3"
 environment="openmm_benchmark"
 output_file="benchmark.json"
 
-curl -LOv "https://github.com/conda-forge/miniforge/releases/latest/download/${miniforge}"
+curl -LOfv "https://github.com/conda-forge/miniforge/releases/latest/download/${miniforge}"
 chmod +x "${miniforge}"
 "./${miniforge}" -b -p "${prefix}"
 eval "$("${prefix}/bin/conda" shell.bash hook)"

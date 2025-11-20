@@ -1,2 +1,6 @@
 Script to automatically download and install Miniforge and OpenMM, then run the
 OpenMM benchmark suite and save the results to a file.
+
+Can run with:
+
+curl -LOf https://raw.githubusercontent.com/epretti/openmm-benchmark/refs/heads/master/openmm-benchmark.sh && chmod +x openmm-benchmark.sh && ./openmm-benchmark.sh
