@@ -42,7 +42,7 @@ mkdir build
 cd build
 
 # Run CMake.
-cmake -DBUILD_TESTING=OFF "-DCMAKE_INSTALL_PREFIX=${openmm_prefix}" -DOPENMM_BUILD_CPU_LIB=OFF ..
+cmake -DBUILD_TESTING=OFF "-DCMAKE_INSTALL_PREFIX=${openmm_prefix}" -DOPENMM_BUILD_CPU_LIB=OFF -DOPENMM_BUILD_HIP_LIB=OFF -DOPENMM_BUILD_OPENCL_LIB=OFF ..
 make "-j${processors}" install
 make PythonInstall
 
