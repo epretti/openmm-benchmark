@@ -18,7 +18,7 @@ miniforge="Miniforge3-${platform}-${architecture}.sh"
 miniforge_prefix="${working_directory}/miniforge3"
 miniforge_environment="openmm_benchmark"
 openmm_prefix="${miniforge_prefix}/envs/${miniforge_environment}"
-miniforge_packages="cmake make cython swig doxygen numpy setuptools cuda-toolkit=${cuda_version}"
+miniforge_packages="cmake make cython swig doxygen numpy setuptools scipy cuda-toolkit=${cuda_version}"
 
 # Create a directory to work in.
 mkdir -p "${working_directory}"
