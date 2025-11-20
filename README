@@ -1,5 +1,5 @@
-Script to automatically download and install Miniforge and OpenMM, then run the
-OpenMM benchmark suite and save the results to a file.
+Script to automatically download and install OpenMM build dependencies, build
+OpenMM from source, then run the OpenMM benchmark suite and save the results.
 
 Can run with:
 
