@@ -4,3 +4,6 @@ OpenMM from source, then run the OpenMM benchmark suite and save the results.
 Can run with:
 
 curl -LOf https://raw.githubusercontent.com/epretti/openmm-benchmark/refs/heads/master/openmm-benchmark.sh && chmod +x openmm-benchmark.sh && ./openmm-benchmark.sh
+
+Run analyze.py with JSON files output by the benchmark script as arguments to
+summarize benchmark results.

@@ -5,6 +5,9 @@ set -evx
 # Git tag of OpenMM version to benchmark:
 openmm_tag="8.4.0"
 
+# Number of replicates to run:
+replicates="3"
+
 # Get environment information.
 current_directory="$(pwd -P)"
 platform="$(uname)"
@@ -52,4 +55,7 @@ python -m openmm.testInstallation
 
 # Run benchmarks.
 cd "${openmm_prefix}/examples/benchmarks"
-python benchmark.py --platform CUDA --style table --outfile "${current_directory}/benchmark.json" --verbose
+for replicate in $(seq 1 "${replicates}"); do
+    echo "Running replicate ${replicate} of ${replicates}..."
+    python benchmark.py --platform CUDA --style table --outfile "${current_directory}/benchmark_${replicate}.json" --verbose
+done
