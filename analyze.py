@@ -18,6 +18,8 @@ def main():
         sys.exit("ERROR: information differs between replicates; results not comparable!")
 
     for key, value in replicates[0]["system"].items():
+        if key == "hostname":
+            continue
         print(f"{key}: {value}")
         if key == "timestamp":
             for replicate in replicates[1:]:
@@ -49,6 +51,7 @@ def main():
 def get_replicate_info(replicate):
     system_info = replicate["system"].copy()
     del system_info["timestamp"]
+    del system_info["hostname"]
     return tuple(sorted(system_info.items()))
 
 # Looks up a benchmark by name.
