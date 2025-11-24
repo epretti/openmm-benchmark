@@ -12,7 +12,7 @@ replicates="3"
 current_directory="$(pwd -P)"
 platform="$(uname)"
 architecture="$(uname -m)"
-cuda_version="$(nvidia-smi --version | grep CUDA | cut -d : -f 2 | xargs)"
+cuda_version="$(nvidia-smi | grep "CUDA Version" | cut -d : -f 3 | cut -d "|" -f 1 | xargs)"
 processors="$(nproc)"
 
 # Set script variables.
