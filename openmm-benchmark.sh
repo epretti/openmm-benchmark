@@ -57,5 +57,5 @@ python -m openmm.testInstallation
 cd "${openmm_prefix}/examples/benchmarks"
 for replicate in $(seq 1 "${replicates}"); do
     echo "Running replicate ${replicate} of ${replicates}..."
-    python benchmark.py --platform CUDA --style table --outfile "${current_directory}/benchmark_${replicate}.json" --verbose
+    python benchmark.py --platform CUDA --style table --outfile "${current_directory}/benchmark_${replicate}.json" --verbose "$@"
 done
