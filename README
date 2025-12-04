@@ -5,5 +5,12 @@ Can run with:
 
 curl -LOf https://raw.githubusercontent.com/epretti/openmm-benchmark/refs/heads/master/openmm-benchmark.sh && chmod +x openmm-benchmark.sh && ./openmm-benchmark.sh
 
+Arguments are passed on from openmm-benchmark.sh to OpenMM's benchmark.py, so,
+e.g., you can run a multi-GPU benchmark by replacing ./openmm-benchmark.sh with
+
+./openmm-benchmark.sh --test=amber20-cellulose,amber20-stmv --device=0,1,...
+
+(Use the actual device indices for the GPUs you want to benchmark.)
+
 Run analyze.py with JSON files output by the benchmark script as arguments to
 summarize benchmark results.
