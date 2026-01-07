@@ -8,6 +8,9 @@ openmm_tag="8.4.0"
 # Number of replicates to run:
 replicates="3"
 
+# Default arguments:
+default_arguments="--platform CUDA --style table --verbose"
+
 # Get environment information.
 current_directory="$(pwd -P)"
 platform="$(uname)"
@@ -57,5 +60,14 @@ python -m openmm.testInstallation
 cd "${openmm_prefix}/examples/benchmarks"
 for replicate in $(seq 1 "${replicates}"); do
     echo "Running replicate ${replicate} of ${replicates}..."
-    python benchmark.py --platform CUDA --style table --outfile "${current_directory}/benchmark_${replicate}.json" --verbose "$@"
+    batch=1
+    for arguments in "$@"; do
+        echo "Running batch ${batch} of arguments: ${arguments}"
+        xargs python benchmark.py ${default_arguments} --outfile "${current_directory}/benchmark_r${replicate}_b${batch}.json" <<< "${arguments}"
+        batch="$((${batch} + 1))"
+    done
+    if [ "${batch}" -eq 1 ]; then
+        echo "Running with default arguments"
+        python benchmark.py ${default_arguments} --outfile "${current_directory}/benchmark_r${replicate}_b${batch}.json"
+    fi
 done

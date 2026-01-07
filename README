@@ -8,9 +8,13 @@ curl -LOf https://raw.githubusercontent.com/epretti/openmm-benchmark/refs/heads/
 Arguments are passed on from openmm-benchmark.sh to OpenMM's benchmark.py, so,
 e.g., you can run a multi-GPU benchmark by replacing ./openmm-benchmark.sh with
 
-./openmm-benchmark.sh --test=amber20-cellulose,amber20-stmv --device=0,1,...
+./openmm-benchmark.sh "--test=amber20-cellulose,amber20-stmv --device=0,1,..."
 
-(Use the actual device indices for the GPUs you want to benchmark.)
+(Use the actual device indices for the GPUs you want to benchmark.)  Arguments
+to pass should be quoted into a single argument; if multiple arguments are given
+to the script, benchmark.py will be run multiple times.  This can be useful to
+perform multiple sets of benchmarks at once with different settings.  If no
+arguments are given at all, benchmarks will be run once with default options.
 
 Run analyze.py with JSON files output by the benchmark script as arguments to
 summarize benchmark results.
