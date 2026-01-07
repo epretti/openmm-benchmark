@@ -29,16 +29,16 @@ def main():
     print()
     print("Test              Precision   Constraints   H mass (amu)   dt (fs)   Ensemble   Platform   ns/day (median)")
 
-    benchmark_names = [benchmark["test"] for benchmark in replicates[0]["benchmarks"]]
-    for benchmark_name in benchmark_names:
-        benchmarks = [get_benchmark(replicate, benchmark_name) for replicate in replicates]
+    benchmark_names_precisions = [(benchmark["test"], benchmark["precision"]) for benchmark in replicates[0]["benchmarks"]]
+    for benchmark_name, benchmark_precision in benchmark_names_precisions:
+        benchmarks = [get_benchmark(replicate, benchmark_name, benchmark_precision) for replicate in replicates]
         if len(set(map(get_benchmark_info, benchmarks))) != 1:
             sys.exit("ERROR: information differs between benchmarks; results not comparable!")
         ns_per_day = [benchmark["ns_per_day"] for benchmark in benchmarks]
         benchmark = benchmarks[0]
         print("{:<18}{:<12}{:<14}{:<15}{:<10g}{:<11}{:<11}{:g}".format(
             benchmark_name,
-            benchmark["precision"],
+            benchmark_precision,
             benchmark["constraints"],
             benchmark["hydrogen_mass"],
             benchmark["timestep_in_fs"],
@@ -55,8 +55,8 @@ def get_replicate_info(replicate):
     return tuple(sorted(system_info.items()))
 
 # Looks up a benchmark by name.
-def get_benchmark(replicate, benchmark_name):
-    benchmarks = [benchmark for benchmark in replicate["benchmarks"] if benchmark["test"] == benchmark_name]
+def get_benchmark(replicate, benchmark_name, benchmark_precision):
+    benchmarks = [benchmark for benchmark in replicate["benchmarks"] if benchmark["test"] == benchmark_name and benchmark["precision"] == benchmark_precision]
     if len(benchmarks) != 1:
         sys.exit("ERROR: missing or duplicate benchmarks; results not comparable!")
     return benchmarks[0]
