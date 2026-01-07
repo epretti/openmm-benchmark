@@ -44,10 +44,27 @@ conda activate "${miniforge_environment}"
 git clone https://github.com/openmm/openmm.git
 cd openmm
 git checkout "${openmm_tag}"
-mkdir build
-cd build
+
+# Patch benchmark script to add deterministic force option.
+git apply - <<EOF
+diff --git a/examples/benchmarks/benchmark.py b/examples/benchmarks/benchmark.py
+index e1a50f161..49071d996 100644
+--- a/examples/benchmarks/benchmark.py
++++ b/examples/benchmarks/benchmark.py
+@@ -356,2 +356,4 @@ def runOneTest(testName, options):
+         properties['DisablePmeStream'] = 'true'
++    if options.deterministic_forces:
++        properties['DeterministicForces'] = 'true'
+     if options.opencl_platform is not None and 'OpenCLPlatformIndex' in platform.getPropertyNames():
+@@ -483,2 +485,3 @@ parser.add_argument('--bond-constraints', default='hbonds', dest='bond_constrain
+ parser.add_argument('--disable-pme-stream', default=False, action='store_true', dest='disable_pme_stream', help='disable use of a separate GPU stream for PME')
++parser.add_argument('--deterministic-forces', default=False, action='store_true', dest='deterministic_forces', help='enable deterministic forces')
+ parser.add_argument('--device', default=None, dest='device', help='device index for CUDA, HIP, or OpenCL')
+EOF
 
 # Run CMake.
+mkdir build
+cd build
 cmake -DBUILD_TESTING=OFF "-DCMAKE_INSTALL_PREFIX=${openmm_prefix}" -DOPENMM_BUILD_CPU_LIB=OFF -DOPENMM_BUILD_HIP_LIB=OFF -DOPENMM_BUILD_OPENCL_LIB=OFF ..
 make "-j${processors}" install
 make PythonInstall
